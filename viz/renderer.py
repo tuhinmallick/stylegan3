@@ -280,8 +280,7 @@ class Renderer:
 
         # Calculate final W.
         w = torch.stack([all_ws[seed] * weight for seed, weight in w0_seeds]).sum(dim=0, keepdim=True)
-        stylemix_idx = [idx for idx in stylemix_idx if 0 <= idx < G.num_ws]
-        if len(stylemix_idx) > 0:
+        if stylemix_idx := [idx for idx in stylemix_idx if 0 <= idx < G.num_ws]:
             w[:, stylemix_idx] = all_ws[stylemix_seed][np.newaxis, stylemix_idx]
         w += w_avg
 

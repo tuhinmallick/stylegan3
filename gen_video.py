@@ -100,8 +100,7 @@ def parse_range(s: Union[str, List[int]]) -> List[int]:
     ranges = []
     range_re = re.compile(r'^(\d+)-(\d+)$')
     for p in s.split(','):
-        m = range_re.match(p)
-        if m:
+        if m := range_re.match(p):
             ranges.extend(range(int(m.group(1)), int(m.group(2))+1))
         else:
             ranges.append(int(p))
@@ -117,8 +116,7 @@ def parse_tuple(s: Union[str, Tuple[int,int]]) -> Tuple[int, int]:
         '0,1' returns (0,1)
     '''
     if isinstance(s, tuple): return s
-    m = re.match(r'^(\d+)[x,](\d+)$', s)
-    if m:
+    if m := re.match(r'^(\d+)[x,](\d+)$', s):
         return (int(m.group(1)), int(m.group(2)))
     raise ValueError(f'cannot parse tuple {s}')
 
@@ -165,7 +163,7 @@ def generate_images(
     output video length will be '# seeds/(w*h)*w_frames' frames.
     """
 
-    print('Loading networks from "%s"...' % network_pkl)
+    print(f'Loading networks from "{network_pkl}"...')
     device = torch.device('cuda')
     with dnnlib.util.open_url(network_pkl) as f:
         G = legacy.load_network_pkl(f)['G_ema'].to(device) # type: ignore

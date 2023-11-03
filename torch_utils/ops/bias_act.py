@@ -106,11 +106,11 @@ def _bias_act_ref(x, b=None, dim=1, act='linear', alpha=None, gain=None, clamp=N
         x = x + b.reshape([-1 if i == dim else 1 for i in range(x.ndim)])
 
     # Evaluate activation function.
-    alpha = float(alpha)
+    alpha = alpha
     x = spec.func(x, alpha=alpha)
 
     # Scale by gain.
-    gain = float(gain)
+    gain = gain
     if gain != 1:
         x = x * gain
 
