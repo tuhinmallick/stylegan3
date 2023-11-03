@@ -50,12 +50,7 @@ def _should_use_custom_op(input):
     assert isinstance(input, torch.Tensor)
     if (not enabled) or (not torch.backends.cudnn.enabled):
         return False
-    if _use_pytorch_1_11_api:
-        # The work-around code doesn't work on PyTorch 1.11.0 onwards
-        return False
-    if input.device.type != 'cuda':
-        return False
-    return True
+    return False if _use_pytorch_1_11_api else input.device.type == 'cuda'
 
 def _tuple_of_ints(xs, ndim):
     xs = tuple(xs) if isinstance(xs, (tuple, list)) else (xs,) * ndim

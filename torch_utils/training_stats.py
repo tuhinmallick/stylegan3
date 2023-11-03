@@ -191,9 +191,7 @@ class Collector:
         no scalars were collected.
         """
         delta = self._get_delta(name)
-        if int(delta[0]) == 0:
-            return float('nan')
-        return float(delta[1] / delta[0])
+        return float('nan') if int(delta[0]) == 0 else float(delta[1] / delta[0])
 
     def std(self, name):
         r"""Returns the standard deviation of the scalars that were
